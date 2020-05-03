@@ -12,6 +12,8 @@ llu choose 	(const unsigned int N, const unsigned int k);	//function calculates 
 
 llu fact 	(const unsigned int N, const unsigned int k);	//function calculates N! / k!
 
+double probability (const unsigned int N);
+
 int main (int argc, char* argv [])
 {
 //	printf ("%d \n", choose (5, 3));
@@ -29,20 +31,32 @@ int main (int argc, char* argv [])
 	}
 	else if (!strcmp (argv[1], "p"))
 	{
+		llu power = 1;
 		// TODO: check size boundaries (size >= 3)
 		unsigned int size = atoi (argv[2]);
-		
-		double result = numOfHeaps*0.5;// / 2.0;
+		/*	
+		double result = double (numOfHeaps (size)) / 2.0;
 		for (int i = 3; i <= size; i++)
 		{
-			result /= i;
+			result /= double(i);
 		}
-		printf ("%f \n", result);
+		printf ("%.21f \n", result);
+		*/
+		printf ("%.21f \n", probability (size));
 	}
 	else
 	{	
 		printf ("Incorrect opcode\n");
 	}
+}
+
+double probability (const unsigned int N)
+{
+	if (N == 1) return 1.0;
+	double result = 1.0;
+	result /= double (N);
+        result *= probability ((N-1)/2) * probability ((N-1)/2);
+	return result;
 }
 
 llu numOfHeaps (const unsigned int N)
